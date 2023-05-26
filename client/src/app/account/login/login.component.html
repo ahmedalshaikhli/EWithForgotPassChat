@@ -1,0 +1,64 @@
+<!-- <div class="d-flex justify-content-center mt-5">
+  <div class="col-3">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="text-center mb-4">
+        <h1 class="mb-3">Login</h1>
+      </div>
+      
+      <app-text-input [formControl]="loginForm.controls['email']" [label]="'Email Address'"></app-text-input>
+      <app-text-input [formControl]="loginForm.controls['password']" [label]="'Password'" [type]="'password'"></app-text-input>
+      <a  data-bs-toggle="modal" data-bs-target="#myModal">
+        Forgot password
+       </a>
+      <div class="d-grid">
+        <button [disabled]="loginForm.invalid" class="btn btn-lg btn-primary mt-3" type="submit">Sign in</button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Forgot your password?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="emailInput" class="form-label">Email:</label>
+          <input [(ngModel)]="restPasswordEmail" (ngModelChange)="checkValidEmail($event)" type="email" class="form-control" id="emailInput" placeholder="Enter your email">
+        </div>
+        <small *ngIf="!restPasswordEmail" class="text-danger"> Email adress is reqired </small>
+        <small *ngIf="!isValidEmail && restPasswordEmail" class="text-danger"> Email adress is invalid </small>
+      </div>
+      <div class="modal-footer">
+        <button id="closeBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" (click)="confirmToSend()" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="d-flex justify-content-center mt-5">
+  <div class="col-3">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="text-center mb-4">
+        <h1 class="mb-3">Login</h1>
+      </div>
+      
+      <app-text-input [formControl]="loginForm.controls['email']" [label]="'Email Address'"></app-text-input>
+      <app-text-input [formControl]="loginForm.controls['password']" [label]="'Password'" [type]="'password'"></app-text-input>
+      <a routerLink="/account/forgot-password">Forgot password</a>
+        
+       
+      <div class="d-grid">
+        <button [disabled]="loginForm.invalid" class="btn btn-lg btn-primary mt-3" type="submit">Sign in</button>
+      </div>
+    </form>
+  </div>
+
+</div>
