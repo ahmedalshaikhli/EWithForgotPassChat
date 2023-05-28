@@ -1,0 +1,49 @@
+
+ <input type="text" [(ngModel)]="searchTerm" placeholder="Search by display name">
+ <button (click)="searchUsers()">Search</button>
+ <button (click)="resetSearch()">Reset</button>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Display Name</th>
+      <th>Email</th>
+      <th>Street</th>
+      <th>City</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.displayName }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.address?.street }}</td>
+      <td>{{ user.address?.city }}</td>
+      <td>
+        <button
+          class="btn btn-light btn-sm"
+          [routerLink]="['details', user.id]"
+        >
+          Details
+        </button> | 
+        <button
+          class="btn btn-warning btn-sm"
+          [routerLink]="['edit', user.id]"
+        >
+          Edit
+        </button> | 
+        <button
+          class="btn btn-danger btn-sm"
+          (click)="deleteUser(user.id)"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<app-pagination
+  [pageIndex]="pageIndex"
+  [pageSize]="pageSize"
+  [totalCount]="totalCount"
+  (pageChanged)="onPageChanged($event)"
+></app-pagination>

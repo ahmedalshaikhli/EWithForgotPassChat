@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {ProductFormValues} from '../shared/models/product';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import { Observable, map } from 'rxjs';
+import { User } from '../shared/models/user';
+
 
 @Injectable({
   providedIn: 'root'
@@ -38,4 +41,45 @@ export class AdminService {
   setMainPhoto(photoId: number, productId: number) {
     return this.http.post(this.baseUrl + 'products/' + productId + '/photo/' + photoId, {});
   }
+
+
+  getUsers(pageIndex: number, pageSize: number, searchTerm: string): Observable<any> {
+    let params = new HttpParams()
+      .set('pageIndex', pageIndex.toString())
+      .set('pageSize', pageSize.toString())
+      .set('searchTerm', searchTerm);
+  
+    return this.http.get<any>(this.baseUrl + 'account/all-users', { params });
+  }
+
+  getTotalUsersCount(searchTerm: string): Observable<number> {
+    const params = new HttpParams()
+      .set('pageIndex', '0')
+      .set('pageSize', '0')
+      .set('searchTerm', searchTerm);
+  
+    return this.http
+      .get<{ users: User[]; totalCount: number }>(this.baseUrl + 'account/all-users', { params })
+      .pipe(map((response) => response.totalCount));
+  }
+
+  getAllUsers(pageIndex: number = 0, pageSize: number = 10, searchTerm: string = '') {
+    const url = this.baseUrl + `account/all-users?pageIndex=${pageIndex}&pageSize=${pageSize}&searchTerm=${searchTerm}`;
+    return this.http.get<any>(url);
+  }
+  getUserById(id: string): Observable<any> {
+    const url = `${this.baseUrl + 'account/edit'}/${id}`;
+    return this.http.get<any>(url);
+  }
+
+
+  updateUser(id: string, user: any): Observable<any> {
+    const url = `${this.baseUrl}account/edit/${id}`;
+    return this.http.put(url, user);
+  }
+
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}account/delete/${id}`);
+  }
+  
 }

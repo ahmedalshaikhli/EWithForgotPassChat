@@ -11,10 +11,12 @@ using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
-
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 namespace API.Controllers
 {
+
+
     public class AccountController : BaseApiController
     {
         private readonly UserManager<AppUser> _userManager;
@@ -172,6 +174,95 @@ public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel
     // Return a JSON response with the success message
     return Ok(new { message = "Password successfully reset." });
 }
+
+//https://localhost:5001/api/account/all-users
+[Authorize(Roles = "Admin")]
+[HttpGet("all-users")]
+public async Task<ActionResult<IEnumerable<AppUser>>> GetAllUsers(int pageIndex = 0, int pageSize = 10, string searchTerm = "")
+{
+    var query = _userManager.Users.Include(u => u.Address).AsQueryable();
+    
+    if (!string.IsNullOrEmpty(searchTerm))
+    {
+        query = query.Where(u => u.DisplayName.Contains(searchTerm) || u.Email.Contains(searchTerm));
+    }
+
+    var totalCount = await query.CountAsync();
+    var users = await query.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
+
+    return Ok(new { users, totalCount });
+}
+// get user 
+ //localhost:5001/api/account/edit/8ac15527-4350-4690-8e99-2e254d086970
+
+[HttpGet("edit/{id}")]
+    public async Task<AppUser> FindByIdAsyncf(string id)
+{
+    return await _userManager.Users.Include(u => u.Address).SingleOrDefaultAsync(u => u.Id == id);
+}
+
+
+ [HttpPut("edit/{id}")]
+public async Task<IActionResult> UpdateUser(string id, [FromBody] AppUser appUser)
+{
+    // Retrieve the existing user data
+    AppUser existingUser = await FindByIdAsyncf(id);
+
+    // Check if the user exists
+    if (existingUser == null)
+    {
+        return NotFound("User not found");
+    }
+
+    // Update the existing user data with the new data
+    existingUser.DisplayName = appUser.DisplayName;
+    existingUser.Email = appUser.Email;
+    existingUser.Address.FirstName = appUser.Address.FirstName;
+    existingUser.Address.LastName = appUser.Address.LastName;
+    existingUser.Address.Street = appUser.Address.Street;
+    existingUser.Address.City = appUser.Address.City;
+    existingUser.Address.State = appUser.Address.State;
+    existingUser.Address.Zipcode = appUser.Address.Zipcode;
+    // Add any other fields you'd like to update
+
+    // Save the changes using the UserManager
+    IdentityResult result = await _userManager.UpdateAsync(existingUser);
+
+    // Check if the update was successful
+    if (result.Succeeded)
+    {
+        return Ok(existingUser);
+    }
+
+    // If the update was not successful, return an error response
+    return BadRequest(result.Errors);
+}
+
+
+[HttpDelete("delete/{id}")]
+public async Task<IActionResult> DeleteUserAsync(string id)
+{
+    var user = await _userManager.FindByIdAsync(id);
+    if (user == null)
+    {
+        return NotFound();
+    }
+
+    var result = await _userManager.DeleteAsync(user);
+    if (result.Succeeded)
+    {
+        return Ok();
+    }
+    else
+    {
+        return BadRequest(result.Errors);
     }
 }
+
+}
+
+
+
+}
+
     

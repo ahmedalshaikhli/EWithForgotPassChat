@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IPhoto, IProduct} from '../../shared/models/product';
-import {AdminService} from '../admin.service';
+import {IPhoto, IProduct} from '../../../shared/models/product';
+import {AdminService} from '../../admin.service';
 import {ToastrService} from 'ngx-toastr';
 import {HttpEvent, HttpEventType} from '@angular/common/http';
 

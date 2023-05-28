@@ -18,7 +18,7 @@ public async Task SendEmailAsync(string email, string subject, string message)
 {
     var emailMessage = new MimeMessage();
 
-    emailMessage.From.Add(new MailboxAddress("Sender Name", _emailSettings.Sender));
+    emailMessage.From.Add(new MailboxAddress("EShop", _emailSettings.Sender));
     emailMessage.To.Add(new MailboxAddress("Recipient Name", email));
     emailMessage.Subject = subject;
     emailMessage.Body = new TextPart("html") { Text = message };

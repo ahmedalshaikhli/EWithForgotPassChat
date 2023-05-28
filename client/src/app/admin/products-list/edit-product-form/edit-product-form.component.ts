@@ -1,9 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IProduct, ProductFormValues} from '../../shared/models/product';
-import {Brand} from '../../shared/models/brand';
-import {Type} from '../../shared/models/type';
+import { Type } from 'src/app/shared/models/type';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AdminService} from '../admin.service';
+import { Brand } from 'src/app/shared/models/brand';
+import { ProductFormValues } from 'src/app/shared/models/product';
+import { AdminService } from '../../admin.service';
+
 
 @Component({
   selector: 'app-edit-product-form',

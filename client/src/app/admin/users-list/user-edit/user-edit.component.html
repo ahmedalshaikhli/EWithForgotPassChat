@@ -1,0 +1,43 @@
+<h1>Edit User</h1>
+<form (ngSubmit)="onSave()" #userForm="ngForm">
+
+<div>
+  <label>Display Name:</label>
+  <input [(ngModel)]="user.displayName" name="DisplayName" type="text">
+</div>
+<div>
+  <label>Email:</label>
+  <input [(ngModel)]="user.email"  name="email" type="email">
+</div>
+<div>
+  <label>Phone Number:</label>
+  <input [(ngModel)]="user.phoneNumber"name="phoneNumber" type="text">
+</div>
+<div>
+  <label>address firstName:</label>
+  <input [(ngModel)]="user.address.firstName"  name="addressfirstName" type="text">
+</div>
+<div>
+  <label>address lastName:</label>
+  <input [(ngModel)]="user.address.lastName"  name="addresslastName" type="text">
+</div>
+<div>
+  <label>address street:</label>
+  <input [(ngModel)]="user.address.street"  name="addressstreet" type="text">
+</div>
+<div>
+  <label>address city:</label>
+  <input [(ngModel)]="user.address.city" name="addresscity" type="text">
+</div>
+<div>
+  <label>address state:</label>
+  <input [(ngModel)]="user.address.state"  name="addressstate" type="text">
+</div>
+<div>
+  <label>address:zipcode</label>
+  <input [(ngModel)]="user.address.zipcode" name="addresszipcode" type="text">
+</div>
+
+<button (click)="onSave()">Save</button>
+<button (click)="goBack()">Back</button>
+</form>

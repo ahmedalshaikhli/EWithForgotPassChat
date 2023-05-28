@@ -1,11 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {AdminService} from '../admin.service';
-import {ShopService} from '../../shop/shop.service';
+
+
 import {ActivatedRoute, Router} from '@angular/router';
-import {IProduct, ProductFormValues} from '../../shared/models/product';
-import {Brand} from '../../shared/models/brand';
+
+
 import {forkJoin} from 'rxjs';
+import { Brand } from 'src/app/shared/models/brand';
+import { IProduct, ProductFormValues } from 'src/app/shared/models/product';
 import { Type } from 'src/app/shared/models/type';
+import { AdminService } from '../../admin.service';
+import { ShopService } from 'src/app/shop/shop.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -28,14 +32,15 @@ export class EditProductComponent implements OnInit {
   ngOnInit(): void {
     const brands = this.getBrands();
     const types = this.getTypes();
-
+  
     forkJoin([types, brands]).subscribe(results => {
       this.types = results[0];
       this.brands = results[1];
     }, error => {
       console.log(error);
     }, () => {
-      if (this.route.snapshot.url[0].path === 'edit') {
+      // Update the condition to check if the correct path is present in the route snapshot
+      if (this.route.snapshot.url.some(segment => segment.path === 'edit')) {
         this.loadProduct();
       }
     });
@@ -46,12 +51,14 @@ export class EditProductComponent implements OnInit {
   }
 
   loadProduct() {
-    const  id= this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
+    console.log('loadProduct called with id:', id);
     id && this.shopService.getProduct(+id).subscribe((response: any) => {
       const productBrandId = this.brands && this.brands.find(x => x.name === response.productBrand).id;
       const productTypeId = this.types && this.types.find(x => x.name === response.productType).id;
       this.product = response;
       this.productFormValues = {...response, productBrandId, productTypeId};
+      console.log('productFormValues:', this.productFormValues);
     });
   }
 

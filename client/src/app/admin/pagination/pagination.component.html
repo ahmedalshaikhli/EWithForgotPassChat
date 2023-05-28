@@ -1,0 +1,21 @@
+<!-- pagination.component.html -->
+<div class="pagination">
+    <button class="page-link" [disabled]="pageIndex === 0" (click)="changePage(pageIndex - 1)">
+      Previous
+    </button>
+    <button
+      class="page-link"
+      *ngFor="let page of pages"
+      [class.active]="pageIndex === page - 1"
+      (click)="changePage(page - 1)"
+    >
+      {{ page }}
+    </button>
+    <button
+      class="page-link"
+      [disabled]="pageIndex === totalPages - 1"
+      (click)="changePage(pageIndex + 1)"
+    >
+      Next
+    </button>
+  </div>
