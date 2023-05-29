@@ -42,11 +42,49 @@ namespace API.Controllers
 
             return new UserDto
             {
+               id = user.Id,
                 Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
                 DisplayName = user.DisplayName
+
             };
         }
+
+     [HttpGet("getcurrentusersetting")]
+        public async Task<ActionResult<UserDto>> GetCurrentUserForSetting()
+ {
+    var user = await _userManager.FindUserByClaimsPrincipleWithAddress(HttpContext.User);
+
+    if (user == null)
+    {
+        return NotFound("User not found");
+    }
+
+    var userDto = new UserDto
+    {
+        id = user.Id,
+        Email = user.Email,
+        Token = await _tokenService.CreateToken(user),
+        DisplayName = user.DisplayName,
+    };
+
+    if (user.Address != null)
+    {
+ 
+        userDto.Address = new AddressDto
+        {
+            FirstName = user.Address.FirstName,
+            LastName = user.Address.LastName,
+            Street = user.Address.Street,
+            City = user.Address.City,
+            State = user.Address.State,
+            Zipcode = user.Address.Zipcode,
+            AppUserId = user.Address.AppUserId
+        };
+    }
+
+    return userDto;
+}
 
         [HttpGet("emailexists")]
         public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
@@ -175,6 +213,8 @@ public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel
     return Ok(new { message = "Password successfully reset." });
 }
 
+
+//get all users
 //https://localhost:5001/api/account/all-users
 [Authorize(Roles = "Admin")]
 [HttpGet("all-users")]
@@ -238,7 +278,7 @@ public async Task<IActionResult> UpdateUser(string id, [FromBody] AppUser appUse
     return BadRequest(result.Errors);
 }
 
-
+//Delete user in Admin Panel
 [HttpDelete("delete/{id}")]
 public async Task<IActionResult> DeleteUserAsync(string id)
 {
@@ -257,6 +297,34 @@ public async Task<IActionResult> DeleteUserAsync(string id)
     {
         return BadRequest(result.Errors);
     }
+}
+
+
+
+[Authorize]
+[HttpPut("update-user")]
+public async Task<ActionResult<UserDto>> UpdateUserInformation(UserUpdateDto userUpdate)
+{
+    var user = await _userManager.FindUserByClaimsPrincipleWithAddress(HttpContext.User);
+    if (user == null) return NotFound("User not found");
+
+    // Check if the edited email already exists
+    if (user.Email != userUpdate.Email)
+    {
+        var emailExists = await _userManager.FindByEmailAsync(userUpdate.Email) != null;
+        if (emailExists) return BadRequest("Email already exists");
+    }
+
+    // Update user information
+    user.Email = userUpdate.Email;
+    user.DisplayName = userUpdate.DisplayName;
+    user.Address = _mapper.Map<AddressDto, Address>(userUpdate.Address);
+
+    var result = await _userManager.UpdateAsync(user);
+
+    if (result.Succeeded) return Ok(_mapper.Map<AppUser, UserDto>(user));
+
+    return BadRequest("Problem updating the user");
 }
 
 }

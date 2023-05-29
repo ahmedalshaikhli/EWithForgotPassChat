@@ -1,0 +1,58 @@
+<div>
+
+  <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+      <div class="row mb-3">
+        <label for="email" class="col-sm-2 col-form-label">Email:</label>
+        <div class="col-sm-10">
+          <input formControlName="email" type="email" class="form-control" id="email" />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="displayName" class="col-sm-2 col-form-label">Display Name:</label>
+        <div class="col-sm-10">
+          <input formControlName="displayName" type="text" class="form-control" id="displayName" />
+        </div>
+      </div>
+      <div formGroupName="address">
+        <div class="row mb-3">
+          <label for="firstName" class="col-sm-2 col-form-label">First Name:</label>
+          <div class="col-sm-10">
+            <input formControlName="firstName" type="text" class="form-control" id="firstName" />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="lastName" class="col-sm-2 col-form-label">Last Name:</label>
+          <div class="col-sm-10">
+            <input formControlName="lastName" type="text" class="form-control" id="lastName" />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="street" class="col-sm-2 col-form-label">Street:</label>
+          <div class="col-sm-10">
+            <input formControlName="street" type="text" class="form-control" id="street" />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="city" class="col-sm-2 col-form-label">City:</label>
+          <div class="col-sm-10">
+            <input formControlName="city" type="text" class="form-control" id="city" />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="state" class="col-sm-2 col-form-label">State:</label>
+          <div class="col-sm-10">
+            <input formControlName="state" type="text" class="form-control" id="state" />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="zipcode" class="col-sm-2 col-form-label">Zipcode:</label>
+          <div class="col-sm-10">
+            <input formControlName="zipcode" type="text" class="form-control" id="zipcode" />
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>

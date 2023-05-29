@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, map, Observable, of, ReplaySubject } from 'rxjs';
+import { catchError, map, Observable, of, ReplaySubject, take, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Address, User } from '../shared/models/user';
 
@@ -114,4 +114,44 @@ export class AccountService {
       })
     );
   }
+
+  async getCurrentUserForSetting(): Promise<Observable<any>> {
+    let email: string | null = null;
+  
+    await this.currentUser$.pipe(take(1)).toPromise().then(user => {
+      if (user && user.token) {
+        email = this.getEmailFromToken(user.token);
+      }
+    });
+  
+    if (!email) {
+      return throwError('Failed to get user email from the token');
+    }
+  
+    const params = new HttpParams().set('email', email);
+    return this.http.get<any>(this.baseUrl + 'account/getcurrentusersetting', { params });
+  }
+
+  getEmailFromToken(token: string): string | null {
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      console.log('Token:', token);
+      console.log('Decoded token:', decodedToken);
+  
+      return decodedToken.email;
+    }
+    return null;
+  }
+
+//update user info in setting
+  updateUserInformation(userUpdate: any): Observable<any> {
+    return this.http.put(this.baseUrl + 'account/update-user', userUpdate);
+  }
+
+  deleteUserByEmail(email: string): Observable<any> {
+    const params = new HttpParams().set('email', email);
+    return this.http.delete(this.baseUrl + 'account/delete-user', { params });
+  }
+
+  
 }

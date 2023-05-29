@@ -11,6 +11,9 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { OrderDetailedComponent } from './order-detailed/order-detailed.component';
+import { UserSettingsModule } from './user-settings/user-settings.module';
+
+
 
 
 
@@ -19,6 +22,7 @@ import { OrderDetailedComponent } from './order-detailed/order-detailed.componen
     AppComponent,
     OrderDetailedComponent,
 
+
   ],
   imports: [
     BrowserModule,
@@ -26,6 +30,7 @@ import { OrderDetailedComponent } from './order-detailed/order-detailed.componen
     BrowserAnimationsModule,
     HttpClientModule,
     CoreModule,
+    UserSettingsModule,
    
     HomeModule
   ],

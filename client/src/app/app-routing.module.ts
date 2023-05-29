@@ -6,6 +6,8 @@ import { ServerErrorComponent } from './core/server-error/server-error.component
 import { TestErrorComponent } from './core/test-error/test-error.component';
 import { HomeComponent } from './home/home.component';
 import { AdminGuard } from './core/guards/admin.guard';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { EditUserComponent } from './user-settings/edit-user/edit-user.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, data: {breadcrumb: 'Home'}},
@@ -29,6 +31,16 @@ const routes: Routes = [
     loadChildren: () => import('./account/account.module')
       .then(mod => mod.AccountModule), data: { breadcrumb: { skip: true } }
   },
+
+  {
+    path: 'user-settings',
+    loadChildren: () => import('./user-settings/user-settings.module')
+      .then(mod => mod.UserSettingsModule), data: { breadcrumb: { skip: false } }
+  },
+
+
+ /*  {path: 'user-settings', component: UserSettingsComponent, data: {breadcrumb: 'user-settings'}},
+  {path: 'user-settings/EditUserComponent', component: EditUserComponent, data: {breadcrumb: 'Edit-user'}}, */
   {
     path: 'admin',
     canActivate: [AuthGuard, AdminGuard],
