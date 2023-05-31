@@ -1,0 +1,47 @@
+<h2>Order List</h2>
+
+<div *ngIf="errorMessage">
+  <p>Error retrieving orders: {{ errorMessage }}</p>
+</div>
+
+<table class="table-bordered"*ngIf="orders">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Buyer Email</th>
+      <th>Order Date</th>
+      <th>Delivery Method</th>
+      <th>Subtotal</th>
+      <th>Shipping Price</th>
+      <th>Total</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders">
+      <td>{{ order.id }}</td>
+      <td>{{ order.buyerEmail }}</td>
+      <td>{{ order.orderDate | date: 'short' }}</td>
+      <td>{{ order.deliveryMethod }}</td>
+      <td>{{ order.subtotal | currency:'USD':'symbol-narrow' }}</td>
+      <td>{{ order.shippingPrice | currency:'USD':'symbol-narrow' }}</td>
+      <td>{{ order.total |currency:'USD':'symbol-narrow' }}</td>
+      <td>{{ order.status }}</td>
+      <td>
+        <button
+          class="btn btn-light btn-sm"
+          [routerLink]="['details', order.buyerEmail]"
+        >
+          Details
+        </button> | 
+ 
+        <button
+          class="btn btn-danger btn-sm"
+       
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

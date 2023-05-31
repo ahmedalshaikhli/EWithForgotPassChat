@@ -100,5 +100,10 @@ namespace Infrastructure.Services
 
             return order;
         }
+
+        public async Task<IReadOnlyList<Order>> GetOrders()
+{
+    return await _unitOfWork.Repository<Order>().ListAllAsync();
+}
     }
 }

@@ -33,7 +33,24 @@ namespace API.Controllers
 
             return Ok(order);
         }
-        
+         [HttpGet("all")]
+    public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrders()
+{
+    var orders = await _orderService.GetOrdersAsync();
+    return Ok(_mapper.Map<IReadOnlyList<OrderToReturnDto>>(orders));
+}
+
+        [HttpGet("email/{email}")]
+        public async Task<ActionResult<OrderToReturnDto>> GetOrderByEmailForUser(string email)
+        {
+            
+
+            var order = await _orderService.GetOrderByEmailAsync(email);
+
+            if (order == null) return NotFound(new ApiResponse(404));
+
+            return _mapper.Map<OrderToReturnDto>(order);
+        }
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser()
         {

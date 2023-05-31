@@ -81,5 +81,14 @@ export class AdminService {
   deleteUser(id: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}account/delete/${id}`);
   }
+
+  getOrders() {
+    return this.http.get<any>(this.baseUrl + 'orders/all');
+  }
+
+  getUserOrderByEmail(buyerEmail:string) {
+    return this.http.get<any>(this.baseUrl + 'orders/email/' + buyerEmail);
+  }
+  
   
 }

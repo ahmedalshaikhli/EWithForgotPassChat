@@ -15,6 +15,8 @@ import { UserDetailsComponent } from './users-list/user-details/user-details.com
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationComponent } from './pagination/pagination.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AllOrdersComponent } from './all-orders/all-orders.component';
+import { AllOrderDetailsComponent } from './all-orders/all-order-details/all-order-details.component';
 
 
 
@@ -22,7 +24,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, EditProductComponent, EditProductFormComponent, EditProductPhotosComponent, ProductsListComponent, UsersListComponent, UserEditComponent, UserDetailsComponent, PaginationComponent, DashboardComponent],
+  declarations: [AdminComponent, EditProductComponent, EditProductFormComponent, EditProductPhotosComponent, ProductsListComponent, UsersListComponent, UserEditComponent, UserDetailsComponent, PaginationComponent, DashboardComponent, AllOrdersComponent, AllOrderDetailsComponent],
   imports: [
     CommonModule,
     SharedModule,
