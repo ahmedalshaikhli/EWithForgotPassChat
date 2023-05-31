@@ -33,13 +33,41 @@ namespace API.Controllers
 
             return Ok(order);
         }
-         [HttpGet("all")]
-    public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrders()
+/*      [HttpGet("all")]
+        public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrders()
+        {
+            var orders = await _orderService.GetOrdersAsync();
+            return Ok(_mapper.Map<IReadOnlyList<OrderToReturnDto>>(orders));
+        } */
+ 
+
+[HttpGet("allorders")]
+public async Task<ActionResult<IEnumerable<OrderToReturnDto>>> GetOrdersAllUsers(int pageIndex = 0, int pageSize = 10, string searchTerm = "")
 {
     var orders = await _orderService.GetOrdersAsync();
-    return Ok(_mapper.Map<IReadOnlyList<OrderToReturnDto>>(orders));
+
+    // Apply search filter if a search term is provided
+    if (!string.IsNullOrEmpty(searchTerm))
+    {
+        if (DateTime.TryParse(searchTerm, out var searchDate))
+        {
+            orders = orders.Where(o => o.BuyerEmail.Contains(searchTerm) || o.OrderDate.Date == searchDate.Date).ToList();
+        }
+        else
+        {
+            orders = orders.Where(o => o.BuyerEmail.Contains(searchTerm)).ToList();
+        }
+    }
+
+    var totalCount = orders.Count;
+    var pagedOrders = orders.Skip(pageIndex * pageSize).Take(pageSize).ToList();
+
+    var orderDtos = _mapper.Map<List<OrderToReturnDto>>(pagedOrders);
+
+    return Ok(new { orders = orderDtos, totalCount, totalPages = (int)Math.Ceiling((double)totalCount / pageSize) });
 }
 
+//https://localhost:5001/api/orders/email/admin@test.com
         [HttpGet("email/{email}")]
         public async Task<ActionResult<OrderToReturnDto>> GetOrderByEmailForUser(string email)
         {

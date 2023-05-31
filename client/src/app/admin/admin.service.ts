@@ -43,15 +43,6 @@ export class AdminService {
   }
 
 
-  getUsers(pageIndex: number, pageSize: number, searchTerm: string): Observable<any> {
-    let params = new HttpParams()
-      .set('pageIndex', pageIndex.toString())
-      .set('pageSize', pageSize.toString())
-      .set('searchTerm', searchTerm);
-  
-    return this.http.get<any>(this.baseUrl + 'account/all-users', { params });
-  }
-
   getTotalUsersCount(searchTerm: string): Observable<number> {
     const params = new HttpParams()
       .set('pageIndex', '0')
@@ -85,7 +76,10 @@ export class AdminService {
   getOrders() {
     return this.http.get<any>(this.baseUrl + 'orders/all');
   }
-
+  getAllOrders(pageIndex: number = 0, pageSize: number = 10, searchTerm: string = '') {
+    const url = this.baseUrl + `orders/allorders?pageIndex=${pageIndex}&pageSize=${pageSize}&searchTerm=${searchTerm}`;
+    return this.http.get<any>(url);
+  }
   getUserOrderByEmail(buyerEmail:string) {
     return this.http.get<any>(this.baseUrl + 'orders/email/' + buyerEmail);
   }

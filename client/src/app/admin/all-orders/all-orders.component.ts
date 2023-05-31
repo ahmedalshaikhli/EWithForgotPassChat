@@ -9,21 +9,42 @@ import { AdminService } from '../admin.service';
 export class AllOrdersComponent implements OnInit {
   orders: any[];
   errorMessage: string;
-  constructor(private adminService: AdminService) {
+  pageIndex = 0;
+  pageSize = 10;
+  totalCount = 0;
+  searchTerm = '';
 
-  }
-  
+  constructor(private adminService: AdminService) {}
+
   ngOnInit(): void {
     this.getOrders();
   }
 
+  searchOrders(): void {
+    this.pageIndex = 0; // Reset the page index when performing a new search
+    this.getOrders();
+  }
+
+  onPageChanged(pageIndex: number): void {
+    this.pageIndex = pageIndex;
+    this.getOrders();
+  }
+
+  resetSearch(): void {
+    this.searchTerm = ''; // Clear the search term
+    this.pageIndex = 0; // Reset the page index
+    this.getOrders();
+  }
+
   getOrders(): void {
-    this.adminService.getOrders()
+    this.adminService
+      .getAllOrders(this.pageIndex, this.pageSize, this.searchTerm)
       .subscribe(
-        orders => {
-          this.orders = orders;
+        (response: any) => {
+          this.orders = response.orders;
+          this.totalCount = response.totalCount;
         },
-        error => {
+        (error: any) => {
           this.errorMessage = error.message;
           console.error(error);
         }

@@ -11,12 +11,14 @@ export class DashboardComponent implements OnInit {
   products: any[] = [];
   totalCount: number = 0;
   totalUsersCount = 0;
+  totalOrders: number;
   constructor(private adminService: AdminService,private shopService: ShopService) {}
 
   ngOnInit(): void {
     this.adminService.getTotalUsersCount('').subscribe((count) => {
       this.totalUsersCount = count;
       this.getProducts();
+      this.getTotalOrders();
     });
   }
   getProducts(useCache: boolean = false) {
@@ -26,5 +28,16 @@ export class DashboardComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+  }
+
+  getTotalOrders(): void {
+    this.adminService.getAllOrders().subscribe(
+      (response: any) => {
+        this.totalOrders = response.totalCount;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 }
