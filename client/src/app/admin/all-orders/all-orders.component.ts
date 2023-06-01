@@ -18,6 +18,8 @@ export class AllOrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrders();
+
+    console.log(this.getOrders());
   }
 
   searchOrders(): void {

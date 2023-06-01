@@ -33,6 +33,7 @@
       </tbody>
     </table>
     <p>Subtotal: {{ order.subtotal | currency }}</p>
+    <p>PaymentMethod: {{ order.paymentMethod }}</p>
     <p>Total: {{ order.total | currency }}</p>
     <p>Status: {{ order.status }}</p>
   </div>

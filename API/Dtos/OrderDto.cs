@@ -4,6 +4,7 @@ namespace API.Dtos
     {
         public string BasketId { get; set; }
         public int DeliveryMethodId { get; set; }
+        public string PaymentMethod { get; set; }
         public AddressDto ShipToAddress { get; set; }
     }
 }

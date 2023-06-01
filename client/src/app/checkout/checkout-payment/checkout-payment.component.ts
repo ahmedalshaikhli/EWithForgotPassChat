@@ -78,13 +78,19 @@ export class CheckoutPaymentComponent implements OnInit {
     if (!basket) throw new Error('cannot get basket');
     try {
       const createdOrder = await this.createOrder(basket);
-      const paymentResult = await this.confirmPaymentWithStripe(basket);
-      if (paymentResult.paymentIntent) {
+      if (this.checkoutForm?.get('paymentForm.paymentMethod')?.value === 'cash') {
         this.basketService.deleteBasket(basket);
         const navigationExtras: NavigationExtras = {state: createdOrder};
         this.router.navigate(['checkout/success'], navigationExtras);
       } else {
-        this.toastr.error(paymentResult.error.message);
+        const paymentResult = await this.confirmPaymentWithStripe(basket);
+        if (paymentResult.paymentIntent) {
+          this.basketService.deleteBasket(basket);
+          const navigationExtras: NavigationExtras = {state: createdOrder};
+          this.router.navigate(['checkout/success'], navigationExtras);
+        } else {
+          this.toastr.error(paymentResult.error.message);
+        }
       }
     } catch (error: any) {
       console.log(error);
@@ -93,7 +99,9 @@ export class CheckoutPaymentComponent implements OnInit {
       this.loading = false;
     }
   }
-
+  
+  
+  
   private async confirmPaymentWithStripe(basket: Basket | null) {
     if (!basket) throw new Error('Basket is null');
     const result = this.stripe?.confirmCardPayment(basket.clientSecret!, {
@@ -116,12 +124,14 @@ export class CheckoutPaymentComponent implements OnInit {
 
   private getOrderToCreate(basket: Basket): OrderToCreate {
     const deliveryMethodId = this.checkoutForm?.get('deliveryForm')?.get('deliveryMethod')?.value;
+    const paymentMethod = this.checkoutForm?.get('paymentForm')?.get('paymentMethod')?.value;
     const shipToAddress = this.checkoutForm?.get('addressForm')?.value as Address;
     if (!deliveryMethodId || !shipToAddress) throw new Error('Problem with basket');
     return {
       basketId: basket.id,
       deliveryMethodId: deliveryMethodId,
-      shipToAddress: shipToAddress
+      shipToAddress: shipToAddress,
+      paymentMethod:  paymentMethod
     }
   }
 }

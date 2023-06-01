@@ -12,6 +12,7 @@
       <th>Subtotal</th>
       <th>Shipping Price</th>
       <th>Total</th>
+      <th>Payment Method</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -24,6 +25,7 @@
       <td>{{ order.subtotal | currency:'USD':'symbol-narrow' }}</td>
       <td>{{ order.shippingPrice | currency:'USD':'symbol-narrow' }}</td>
       <td>{{ order.total | currency:'USD':'symbol-narrow' }}</td>
+      <td>{{ order.paymentMethod }}</td>
       <td>{{ order.status }}</td>
       <td>
         <button

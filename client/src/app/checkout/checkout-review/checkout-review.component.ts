@@ -17,6 +17,7 @@ export class CheckoutReviewComponent {
     this.basketService.createPaymentIntent().subscribe({
       next: () => {
         this.appStepper?.next();
+        console.log(this.basketService);
       },
       error: error => this.toastr.error(error.message)
     })

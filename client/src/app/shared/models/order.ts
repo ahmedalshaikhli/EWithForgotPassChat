@@ -3,6 +3,7 @@ import { Address } from "./user";
 export interface OrderToCreate {
     basketId: string;
     deliveryMethodId: number;
+    paymentMethod:string;
     shipToAddress: Address;
 }
 
@@ -15,6 +16,7 @@ export interface Order {
     shippingPrice: number;
     orderItems: OrderItem[];
     subtotal: number;
+    paymentMethod:string;
     total: number;
     status: string;
   }

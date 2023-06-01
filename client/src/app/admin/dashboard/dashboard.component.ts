@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
   products: any[] = [];
   totalCount: number = 0;
   totalUsersCount = 0;
-  totalOrders: number;
+  totalOrders: number | undefined;;
   constructor(private adminService: AdminService,private shopService: ShopService) {}
 
   ngOnInit(): void {
