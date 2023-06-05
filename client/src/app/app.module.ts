@@ -12,6 +12,7 @@ import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { OrderDetailedComponent } from './order-detailed/order-detailed.component';
 import { UserSettingsModule } from './user-settings/user-settings.module';
+import { ShopService } from './shop/shop.service';
 
 
 
@@ -38,6 +39,7 @@ import { UserSettingsModule } from './user-settings/user-settings.module';
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    ShopService,
   ],
   bootstrap: [AppComponent]
 })

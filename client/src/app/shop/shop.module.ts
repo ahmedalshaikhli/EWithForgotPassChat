@@ -7,6 +7,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { RouterModule } from '@angular/router';
 import { ShopRoutingModule } from './shop-routing.module';
 
+
 @NgModule({
   declarations: [
     ShopComponent,
@@ -16,7 +17,8 @@ import { ShopRoutingModule } from './shop-routing.module';
   imports: [
     CommonModule,
     SharedModule,
-    ShopRoutingModule
+    ShopRoutingModule,
+   
   ]
 })
 export class ShopModule { }

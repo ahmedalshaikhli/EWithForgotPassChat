@@ -5,12 +5,22 @@
     font-size: 1.1em;
 
     &.active {
-        border-radius: 10px;
+        /* border-radius: 10px; */
+        background-color: #522888;
     }
 
     &:not(.active):hover {
         color: #fff;
-        background-color: rgba(233, 84, 32, 0.7);
-        border-radius: 10px;
+        background-color:#BF9553;
+        
     }
 }
+
+.gold-text{
+    color: #BF9553;
+   
+}
+
+
+
+

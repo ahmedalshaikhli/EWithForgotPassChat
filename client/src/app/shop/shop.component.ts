@@ -31,6 +31,7 @@ export class ShopComponent implements OnInit {
     this.getProducts();
     this.getBrands();
     this.getTypes();
+    this.subscribeToBrandSelected();
   }
 
   getProducts() {
@@ -65,7 +66,11 @@ export class ShopComponent implements OnInit {
     this.shopParams = params;
     this.getProducts();
   }
-
+  private subscribeToBrandSelected() {
+    this.shopService.brandSelected.subscribe((brandId: number) => {
+      this.onBrandSelected(brandId);
+    });
+  }
   onTypeSelected(typeId: number) {
     const params = this.shopService.getShopParams();
     params.typeId = typeId;
@@ -108,5 +113,11 @@ export class ShopComponent implements OnInit {
     this.shopService.setShopParams(this.shopParams);
     this.getProducts();
   }
-
 }
+
+
+
+
+
+
+

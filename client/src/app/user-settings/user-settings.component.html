@@ -1,7 +1,7 @@
 
 <div class="container " style="margin-top: 10px;">
 
-    <a routerLink="edit-user" routerLinkActive="active"><i class="material-icons">edit</i><span>EditUserComponent</span></a>
+  
     <div class="card mb-4">
       <div class="card-body">
         <ng-container *ngIf="user">
@@ -81,5 +81,6 @@
         </ng-container>
         
       </div>
+      <button class="btn btn-secondary mb-2" routerLink="edit-user" routerLinkActive="active">Edit User</button>
     </div>
 </div>

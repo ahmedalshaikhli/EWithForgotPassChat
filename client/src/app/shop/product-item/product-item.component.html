@@ -1,20 +1,66 @@
-<div class="card h-100 shadow-sm" *ngIf="product">
-
-    <div class="image position-relative" style="cursor: pointer;">
-        <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-fluid bg-info">
-        <div class="d-flex align-items-center justify-content-center hover-overlay">
-            <button (click)="addItemToBasket()" class="btn btn-primary fa fa-shopping-cart me-2"></button>
-            <button routerLink="/shop/{{product.id}}" class="btn btn-primary">View</button>
+<!-- <div class="card h-100 shadow-sm" *ngIf="product">
+    <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="card-img-top">
+  
+    <div class="card-body d-flex flex-column">
+      <div class="d-flex align-items-center mb-2">
+        <i class="fa fa-shopping-basket me-1"></i>
+        <h6 class="card-title text-uppercase m-0">{{product.name}}</h6>
+      </div>
+      <span class="card-text">{{product.price | currency}}</span>
+    </div>
+  
+    <div class="card-footer">
+      <div class="d-flex justify-content-between align-items-center">
+        <a (click)="addItemToBasket()" class="btn btn-link">
+          <i class="fa fa-shopping-cart"></i> Add 
+        </a>
+        <a routerLink="/shop/{{product.id}}" class="btn btn-link">
+          <i class="fa fa-eye"></i> View
+        </a>
+      </div>
+    </div>
+  </div> -->
+  <div *ngIf="product" class="block product no-border z-depth-2-top z-depth-2--hover">
+    <div class="block-image">
+        <a [routerLink]="'/shop/' + product.id">
+            <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-center custom-image-height">
+        </a>
+        <span class="product-ribbon product-ribbon-right product-ribbon--style-1 bg-blue text-uppercase">New</span>
+    </div>
+    <div class="block-body text-center">
+        <h3 class="heading heading-5 strong-600 text-capitalize">
+            <a [routerLink]="'/shop/' + product.id">
+                {{product.name | slice:0:25}}
+            </a>
+        </h3>
+        <p class="product-description">
+            {{product.price | currency}}
+        </p>
+        <div class="product-buttons mt-4">
+            <div class="row align-items-center">
+                <div class="col-6 text-start">
+                    <!-- <a [routerLink]="'/shop/' + product.id" class="btn-icon" data-toggle="tooltip" data-placement="top" title="View">
+                        <i class="fa fa-eye" style="margin-right: 10px;"></i>
+                    </a> -->
+            <!--         <share-buttons [url]="'https://example.com/shop/' + product.id" [text]="product.name"></share-buttons> -->
+                    <a href="#" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Favorite">
+                        <i class="fa fa-heart" style="margin-right: 10px;"></i>
+                    </a> 
+                    <a href="#" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Compare">
+                        <i class="fa fa-share"></i>
+                    </a>
+                </div>
+                <div class="col-6 text-end">
+                    <button type="button" (click)="addItemToBasket()" class="btn btn-block btn-primary btn-circle btn-icon-left">
+                        <i class="fa fa-shopping-cart"></i> Add
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-
-    
-    <div class="card-body d-flex flex-column">
-        <a href="" class="text-decoration-none">
-            <h6 class="text-uppercase">
-                {{product.name}}
-            </h6>
-        </a>
-        <span class="mb-2">{{product.price | currency}}</span>
-    </div>
 </div>
+
+
+
+
+

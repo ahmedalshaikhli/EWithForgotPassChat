@@ -6,24 +6,22 @@
     <ng-container *ngIf="(basketService.basketSource$ | async) as basket">
         <div class="container">
             <div class="row">
-                <app-basket-summary
-                    (addItem)="incrementQuantity($event)"
-                    (removeItem)="removeItem($event)"
-                ></app-basket-summary>
-            </div>
+                <div class="col-md-8">
+                    <app-basket-summary
+                        (addItem)="incrementQuantity($event)"
+                        (removeItem)="removeItem($event)"
+                    ></app-basket-summary>
+                </div>
 
-            <div class="row">
-                <div class="col-6 offset-6">
+                <div class="col-md-4">
                     <app-order-totals></app-order-totals>
-                    <div class="d-grid">
+                    <div class="d-grid mb-2">
                         <a routerLink="/checkout" class="btn btn-outline-primary py-2">
                             Proceed to checkout
                         </a>
                     </div>
                 </div>
             </div>
-
         </div>
     </ng-container>
-
 </div>

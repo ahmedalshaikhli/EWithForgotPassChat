@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 label.xng-breadcrumb-trail {
-    color: orange;
+    color:  #BF9553;
 }
 
 .product-tabset > .nav-tabs > li.open > a, .product-tabset > .nav-tabs > li:hover > a {
@@ -19,7 +19,7 @@ label.xng-breadcrumb-trail {
   }
   
   .product-tabset > .nav-tabs > li.active {
-    border-bottom: 4px solid #E95420;
+    border-bottom: 4px solid #BF9553;
     position: relative;
   }
   
@@ -41,3 +41,80 @@ label.xng-breadcrumb-trail {
   }
 
 
+.btn-outline-primary{
+  color:#522888;
+  border-color: #743ac0;
+ 
+}
+
+.btn-primary {
+  color:white;
+  background:#522888;
+  border-color: #743ac0;
+ 
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #522888;
+  border-color: #743ac0;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active, .btn-outline-primary.active, .open>.dropdown-toggle.btn-outline-primary {
+  color: #fff;
+  background-color: #522888;
+  border-color: #743ac0;
+}
+
+.btn-secondary{
+  background:#BF9553;
+  border: #e9cb9c;
+}
+
+.btn-outline-secondary{
+  color:#BF9553;
+  border-color: #BF9553;
+ 
+}
+
+.btn-outline-secondary:hover, .btn-outline-secondary:focus, .btn-outline-secondary:active, .btn-outline-secondary.active, .open>.dropdown-toggle.btn-outline-secondary {
+  color: #fff;
+  background-color: #BF9553;
+  border-color: #ebe8e4;
+}
+
+
+.btn.disabled, .btn:disabled, fieldset:disabled .btn {
+  color: #522888;
+  pointer-events: none;
+  background-color: var(--bs-btn-disabled-bg);
+  border-color: #522888;
+  opacity: var(--bs-btn-disabled-opacity);
+}
+.navbar {
+  background-color: #522888;
+}
+
+
+.active>.page-link, .page-link.active {
+ 
+  color: var(--bs-pagination-active-color);
+  background-color: #522888;
+  border-color: #743ac0;
+}
+
+
+.page-link {
+  color: #BF9553;
+}
+.text-primary-purble{
+ color: #522888;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: var(--bs-nav-pills-link-active-color);
+  background-color: #522888;
+}
+
+.form-check-input:checked {
+  background-color: #522888;
+  border-color: #743ac0;
+}
