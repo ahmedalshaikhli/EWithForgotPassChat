@@ -1,49 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search by display name">
+        <button class="btn btn-outline-secondary" type="button" (click)="searchUsers()">Search</button>
+        <button class="btn btn-outline-secondary" type="button" (click)="resetSearch()">Reset</button>
+      </div>
+    </div>
+    
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Display Name</th>
+              <th class="d-none d-md-table-cell">Email</th>
+              <th >Street</th>
+              <th class="d-none d-md-table-cell">City</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td >{{ user.displayName }}</td>
+            
+              <td class="d-none d-md-table-cell">{{ user.email }}</td>
+              <td >{{ user.address?.street }}</td>
+              <td class="d-none d-md-table-cell">{{ user.address?.city }}</td>
+              <td>
+        
+                
+                  <i [routerLink]="['details', user.id]" class="material-icons" style="cursor: pointer;">visibility</i>   
 
- <input type="text" [(ngModel)]="searchTerm" placeholder="Search by display name">
- <button (click)="searchUsers()">Search</button>
- <button (click)="resetSearch()">Reset</button>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Display Name</th>
-      <th>Email</th>
-      <th>Street</th>
-      <th>City</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of users">
-      <td>{{ user.displayName }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.address?.street }}</td>
-      <td>{{ user.address?.city }}</td>
-      <td>
-        <button
-          class="btn btn-light btn-sm"
-          [routerLink]="['details', user.id]"
-        >
-          Details
-        </button> | 
-        <button
-          class="btn btn-warning btn-sm"
-          [routerLink]="['edit', user.id]"
-        >
-          Edit
-        </button> | 
-        <button
-          class="btn btn-danger btn-sm"
-          (click)="deleteUser(user.id)"
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+         
+                  <i [routerLink]="['edit', user.id]" class="material-icons" style="cursor: pointer;">edit</i> 
+      
 
-<app-pagination
-  [pageIndex]="pageIndex"
-  [pageSize]="pageSize"
-  [totalCount]="totalCount"
-  (pageChanged)="onPageChanged($event)"
-></app-pagination>
+                  <i (click)="deleteUser(user.id)" class="material-icons" style="cursor: pointer;">delete</i> 
+        
+              
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12">
+      <app-pagination [pageIndex]="pageIndex" [pageSize]="pageSize" [totalCount]="totalCount" (pageChanged)="onPageChanged($event)"></app-pagination>
+    </div>
+  </div>
+</div>

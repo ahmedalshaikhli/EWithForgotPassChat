@@ -87,13 +87,77 @@
       <li>
         <a routerLink="users-list" routerLinkActive="active"><i class="material-icons">group_add</i><span>Users</span></a>
       </li>
-      <li>
+  <!--     <li>
         <a routerLink="user-settings" routerLinkActive="active"><i class="material-icons">settings</i><span>Settings</span></a>
-      </li>
+      </li> -->
     </ul>
   </nav>
 
   <!-- Page Content -->
   <div id="content">
-    <router-outlet></router-outlet>
+    
+<!--       <div class="row">
+        <div class="col-12 col-sm-auto">
+          <button class="btn btn-link d-inline-block" routerLink="dashboard" routerLinkActive="active">
+            <i class="material-icons">dashboard</i><span>Dashboard</span>
+          </button>
+        </div>
+        <div class="col-12 col-sm-auto">
+          <button class="btn btn-link d-inline-block" routerLink="all-orders" routerLinkActive="active">
+            <i class="material-icons">list_alt</i><span>Orders</span>
+          </button>
+        </div>
+        <div class="col-12 col-sm-auto">
+          <button class="btn btn-link d-inline-block" routerLink="products-list" routerLinkActive="active">
+            <i class="material-icons">store</i><span>Products</span>
+          </button>
+        </div>
+        <div class="col-12 col-sm-auto">
+          <button class="btn btn-link d-inline-block" routerLink="users-list" routerLinkActive="active">
+            <i class="material-icons">group_add</i><span>Users</span>
+          </button>
+        </div>
+        <div class="col-12 col-sm-auto">
+          <button class="btn btn-link d-inline-block" routerLink="user-settings" routerLinkActive="active">
+            <i class="material-icons">settings</i><span>Settings</span>
+          </button>
+        </div>
+      </div> -->
+
+      <div class="container">
+        <div class="row justify-content-center pt-3 pb-3">
+          <div class="col-12">
+            <div class=" d-sm-none d-flex justify-content-center">
+              <button type="button" class="btn btn-outline-primary" routerLink="dashboard" routerLinkActive="active">
+                <i class="material-icons">dashboard</i> Dashboard
+              </button>
+              <button type="button" class="btn btn-outline-primary" routerLink="all-orders" routerLinkActive="active">
+                <i class="material-icons">list_alt</i> Orders
+              </button>
+              <button type="button" class="btn btn-outline-primary" routerLink="products-list" routerLinkActive="active">
+                <i class="material-icons">store</i> Products
+              </button>
+              <button type="button" class="btn btn-outline-primary" routerLink="users-list" routerLinkActive="active">
+                <i class="material-icons">group_add</i> Users
+              </button>
+       <!--        <button type="button" class="btn btn-outline-primary" routerLink="user-settings" routerLinkActive="active">
+                <i class="material-icons">settings</i> Settings
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+
+    
+     <router-outlet></router-outlet> 
   </div>
+
+ 

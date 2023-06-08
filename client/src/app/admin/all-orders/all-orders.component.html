@@ -1,53 +1,50 @@
-<input type="text" [(ngModel)]="searchTerm" placeholder="Search by display name">
-<button (click)="searchOrders()">Search</button>
-<button (click)="resetSearch()">Reset</button>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Buyer Email</th>
-      <th>Order Date</th>
-      <th>Delivery Method</th>
-      <th>Subtotal</th>
-      <th>Shipping Price</th>
-      <th>Total</th>
-      <th>Payment Method</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let order of orders">
-      <td>{{ order.id }}</td>
-      <td>{{ order.buyerEmail }}</td>
-      <td>{{ order.orderDate | date: 'short' }}</td>
-      <td>{{ order.deliveryMethod }}</td>
-      <td>{{ order.subtotal | currency:'USD':'symbol-narrow' }}</td>
-      <td>{{ order.shippingPrice | currency:'USD':'symbol-narrow' }}</td>
-      <td>{{ order.total | currency:'USD':'symbol-narrow' }}</td>
-      <td>{{ order.paymentMethod }}</td>
-      <td>{{ order.status }}</td>
-      <td>
-        <button
-          class="btn btn-light btn-sm"
-          [routerLink]="['details', order.buyerEmail]"
-        >
-          Details
-        </button>
-        |
-        <button
-          class="btn btn-danger btn-sm"
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<app-pagination
-  [pageIndex]="pageIndex"
-  [pageSize]="pageSize"
-  [totalCount]="totalCount"
-  (pageChanged)="onPageChanged($event)"
-></app-pagination>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search by display name">
+        <button class="btn btn-outline-secondary" type="button" (click)="searchOrders()">Search</button>
+        <button class="btn btn-outline-secondary" type="button" (click)="resetSearch()">Reset</button>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th class="d-none d-sm-table-cell">ID</th>
+              <th>Buyer Email</th>
+              <th>Order Date</th>
+              <th class="d-none d-sm-table-cell">Delivery Method</th>
+              <th class="d-none d-sm-table-cell">Subtotal</th>
+              <th class="d-none d-sm-table-cell">Shipping Price</th>
+              <th class="d-none d-sm-table-cell">Total</th>
+              <th class="d-none d-sm-table-cell">Payment Method</th>
+              <th >Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders">
+              <td class="d-none d-sm-table-cell">{{ order.id }}</td>
+              <td>{{ order.buyerEmail }}</td>
+              <td>{{ order.orderDate | date: 'short' }}</td>
+              <td class="d-none d-sm-table-cell">{{ order.deliveryMethod }}</td>
+              <td class="d-none d-sm-table-cell">{{ order.subtotal | currency:'USD':'symbol-narrow' }}</td>
+              <td class="d-none d-sm-table-cell">{{ order.shippingPrice | currency:'USD':'symbol-narrow' }}</td>
+              <td class="d-none d-sm-table-cell">{{ order.total | currency:'USD':'symbol-narrow' }}</td>
+              <td class="d-none d-sm-table-cell">{{ order.paymentMethod }}</td>
+              <td>{{ order.status }}</td>
+              <td>
+                <i [routerLink]="['details', order.buyerEmail]" class="material-icons" style="cursor: pointer;">visibility</i>   
+               
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12">
+      <app-pagination [pageIndex]="pageIndex" [pageSize]="pageSize" [totalCount]="totalCount" (pageChanged)="onPageChanged($event)"></app-pagination>
+    </div>
+  </div>
+</div>

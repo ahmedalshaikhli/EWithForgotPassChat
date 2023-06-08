@@ -22,9 +22,11 @@
   </div> -->
   <div *ngIf="product" class="block product no-border z-depth-2-top z-depth-2--hover">
     <div class="block-image">
-        <a [routerLink]="'/shop/' + product.id">
-            <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-center custom-image-height">
-        </a>
+        <div class="d-flex justify-content-center">
+            <a [routerLink]="'/shop/' + product.id">
+                <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-center img-fluid custom-image-height">
+            </a>
+        </div>
         <span class="product-ribbon product-ribbon-right product-ribbon--style-1 bg-blue text-uppercase">New</span>
     </div>
     <div class="block-body text-center">

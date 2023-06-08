@@ -83,10 +83,20 @@ label.xng-breadcrumb-trail {
 }
 
 
-.btn.disabled, .btn:disabled, fieldset:disabled .btn {
-  color: #522888;
+/* .btn.disabled, .btn:disabled, fieldset:disabled .btn {
+  color: #fff;
   pointer-events: none;
-  background-color: var(--bs-btn-disabled-bg);
+  background-color:  #522888;
+  border-color: #522888;
+  opacity: var(--bs-btn-disabled-opacity);
+}
+ */
+.btn.disabled.btn-primary,
+.btn:disabled.btn-primary,
+fieldset:disabled .btn.btn-primary {
+  color: #fff;
+  pointer-events: none;
+  background-color:  #522888;
   border-color: #522888;
   opacity: var(--bs-btn-disabled-opacity);
 }

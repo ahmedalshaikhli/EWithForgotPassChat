@@ -1,41 +1,46 @@
-<!-- user-details.component.html -->
+<div class="container">
 
-<h1>User Details</h1>
-
-<div>
-  <label>Display Name:</label>
-  <span>{{ user.displayName }}</span>
+  <div class="card">
+ 
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label">Display Name:</label>
+        <span>{{ user.displayName }}</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email:</label>
+        <span>{{ user.email }}</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Phone Number:</label>
+        <span>{{ user.phoneNumber }}</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Address First Name:</label>
+        <span>{{ user.address.firstName }}</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Address Last Name:</label>
+        <span>{{ user.address.lastName }}</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Address Street:</label>
+        <span>{{ user.address.street }}</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Address City:</label>
+        <span>{{ user.address.city }}</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Address State:</label>
+        <span>{{ user.address.state }}</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Address Zipcode:</label>
+        <span>{{ user.address.zipcode }}</span>
+      </div>
+      <button class="btn btn-primary" (click)="goBack()">Back</button>
+    </div>
+  </div>
+  
 </div>
-<div>
-  <label>Email:</label>
-  <span>{{ user.email }}</span>
-</div>
-<div>
-  <label>Phone Number:</label>
-  <span>{{ user.phoneNumber }}</span>
-</div>
-<div>
-  <label>Address First Name:</label>
-  <span>{{ user.address.firstName }}</span>
-</div>
-<div>
-  <label>Address Last Name:</label>
-  <span>{{ user.address.lastName }}</span>
-</div>
-<div>
-  <label>Address Street:</label>
-  <span>{{ user.address.street }}</span>
-</div>
-<div>
-  <label>Address City:</label>
-  <span>{{ user.address.city }}</span>
-</div>
-<div>
-  <label>Address State:</label>
-  <span>{{ user.address.state }}</span>
-</div>
-<div>
-  <label>Address Zipcode:</label>
-  <span>{{ user.address.zipcode }}</span>
-</div>
-<button (click)="goBack()">Back</button>
