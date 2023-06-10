@@ -1,47 +1,42 @@
 <div class="container">
     <div class="row" *ngIf="product">
-        <div class="col-md-6">
-            <ngx-gallery [options]="galleryOptions" [images]="galleryImages" style="display: inline-block; margin-bottom: 20px"></ngx-gallery>
+      <div class="col-md-6">
+        <ngx-gallery [options]="galleryOptions" [images]="galleryImages" style="display: inline-block;" class="mt-3"></ngx-gallery>
+      </div>
+      <div class="col-md-6 mt-3">
+        <h2>{{product.name}}</h2>
+        <p style="font-size: 2em;">{{product.price | currency}}</p>
+  
+        <h5 class="text-primary-purble mb-3" *ngIf="quantityInBasket > 0">
+          You have {{quantityInBasket}} of this item in your basket
+        </h5>
+  
+        <div class="d-flex justify-content-start align-items-center">
+          <i 
+            (click)="decrementQuantity()"
+            class="fa fa-minus-circle page-link me-2" 
+            style="cursor: pointer; font-size: 2em;"></i>
+          <span class="font-weight-bold" style="font-size: 1.5em;">
+            {{quantity}}
+          </span>
+          <i 
+            (click)="incrementQuantity()"
+            class="fa fa-plus-circle page-link ms-2" 
+            style="cursor: pointer; font-size: 2em;"></i>
+          <button 
+            class="btn btn-outline-primary ms-4"
+            (click)="updateBasket()"
+            [disabled]="quantity === quantityInBasket"
+          >
+            {{buttonText}}
+          </button>
         </div>
-        <div class="col-md-6 mt-5">
-            <h2>{{product.name}}</h2>
-            <p style="font-size: 2em;">{{product.price | currency}}</p>
-
-            <h5 class="text-primary-purble mb-3" *ngIf="quantityInBasket > 0">
-                You have {{quantityInBasket}} of this item in your basket
-            </h5>
-
-            <div class="d-flex justify-content-start align-items-center">
-                <i 
-                    (click)="decrementQuantity()"
-                    class="fa fa-minus-circle page-link me-2" 
-                    style="cursor: pointer; font-size: 2em;"></i>
-                <span class="font-weight-bold" style="font-size: 1.5em;">
-                    {{quantity}}
-                </span>
-                <i 
-                    (click)="incrementQuantity()"
-                    class="fa fa-plus-circle page-link ms-2" 
-                    style="cursor: pointer; font-size: 2em;"></i>
-                <button 
-                    class="btn btn-outline-primary ms-4"
-                    (click)="updateBasket()"
-                    [disabled]="quantity === quantityInBasket"
-                >{{buttonText}}</button>
-            </div>
-            <div class="row mt-4">
-                <div class="col">
-                    <h4>Description</h4>
-                    <p>{{product.description}}</p>
-                </div>
-            </div>
+        <div class="row mt-3">
+          <div class="col">
+            <h4>Description</h4>
+            <p>{{product.description}}</p>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-
-
-
-
-
-
-
+  </div>

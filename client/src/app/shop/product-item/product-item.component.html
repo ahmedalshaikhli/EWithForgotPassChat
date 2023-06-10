@@ -22,7 +22,7 @@
   </div> -->
   <div *ngIf="product" class="block product no-border z-depth-2-top z-depth-2--hover">
     <div class="block-image">
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mt-3">
             <a [routerLink]="'/shop/' + product.id">
                 <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-center img-fluid custom-image-height">
             </a>
@@ -38,7 +38,7 @@
         <p class="product-description">
             {{product.price | currency}}
         </p>
-        <div class="product-buttons mt-4">
+        <div class="product-buttons mt-2">
             <div class="row align-items-center">
                 <div class="col-6 text-start">
                     <!-- <a [routerLink]="'/shop/' + product.id" class="btn-icon" data-toggle="tooltip" data-placement="top" title="View">

@@ -12,12 +12,19 @@
 
 
 
-      <div class="col-12"> 
+      <div class="col-6"> 
       <button [routerLink]="['/admin/create']" class="btn btn-outline-primary">Create new product</button>
+    
       </div> 
+      <div class="col-6"> 
+       
+        <app-paging-header
+        [totalCount]="totalCount"
+        [pageSize]="this.shopParams.pageSize"
+        [pageNumber]="this.shopParams.pageNumber"></app-paging-header> 
+        </div> 
 
     </div>
-  
 
     <div class="row">
       <div class="col-12">
@@ -54,8 +61,8 @@
       </div>
     </div>
 
-    <div class="col-12">
-      <div class="d-flex " *ngIf="totalCount > 0">
+    <div class="col-12" >
+      <div *ngIf="totalCount > 0">
         <app-pager
           [pageSize]="shopParams.pageSize"
           [pageNumber]="shopParams.pageNumber"

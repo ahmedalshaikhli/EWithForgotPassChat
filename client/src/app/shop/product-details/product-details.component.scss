@@ -1,0 +1,6 @@
+::ng-deep.ngx-gallery-thumbnails .ngx-gallery-thumbnail {
+    border: none !important;
+}
+::ng-deep.ngx-gallery-thumbnails .ngx-gallery-thumbnail.ngx-gallery-active {
+  border: 1px solid #BF9553!important;
+}
