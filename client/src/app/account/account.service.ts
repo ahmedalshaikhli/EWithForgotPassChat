@@ -153,5 +153,15 @@ export class AccountService {
     return this.http.delete(this.baseUrl + 'account/delete-user', { params });
   }
 
+  deleteAccount(email: string): Promise<any> {
+    const url = `${this.baseUrl}account/delete-account`;
   
+    const params = new HttpParams().set('email', email);
+  
+    return this.http.delete(url, { params })
+      .toPromise()
+      .catch(error => {
+        throw new Error('Failed to delete account');
+      });
+  }
 }

@@ -84,5 +84,5 @@ export class AdminService {
     return this.http.get<any>(this.baseUrl + 'orders/email/' + buyerEmail);
   }
   
-  
+
 }

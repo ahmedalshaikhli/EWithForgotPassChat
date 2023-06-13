@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from 'src/app/account/account.service';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -12,7 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 export class EditUserComponent implements OnInit {
   user: any;
   editUserForm: FormGroup;
-
+  userProfilePhoto: File;
+preview: string | ArrayBuffer;
   constructor(
     private accountService: AccountService,
     private fb: FormBuilder,
@@ -22,13 +23,14 @@ export class EditUserComponent implements OnInit {
     this.editUserForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       displayName: ['', Validators.required],
+      userProfilePhoto: [''],
       address: this.fb.group({
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        street: ['', Validators.required],
-        city: ['', Validators.required],
-        state: ['', Validators.required],
-        zipcode: ['', Validators.required],
+        firstName: [''],
+        lastName: [''],
+        street: [''],
+        city: [''],
+        state: [''],
+        zipcode: [''],
       }),
     });
   }
@@ -43,6 +45,7 @@ export class EditUserComponent implements OnInit {
         this.editUserForm.patchValue({
           email: this.user.email,
           displayName: this.user.displayName,
+          UserProfilePhoto: this.user.userProfilePhoto,
           address: {
             firstName: this.user.address?.firstName,
             lastName: this.user.address?.lastName,
@@ -57,11 +60,43 @@ export class EditUserComponent implements OnInit {
       console.error('Failed to fetch user data:', error);
     }
   }
+  
+  onSelectFile(event: Event): void {
+    const eventTarget = event.target as HTMLInputElement;
+    if (eventTarget.files && eventTarget.files.length > 0) {
+      const file = eventTarget.files[0];
+      this.userProfilePhoto = file;
+      this.editUserForm.get('userProfilePhoto').setValue(file.name); // set the form control value to the file name
+
+      // Create an object of FileReader
+      let reader = new FileReader();
+      // Read the uploaded file as Data URL
+      reader.readAsDataURL(file);
+      reader.onload = (_event) => {
+        this.preview = reader.result;
+      }
+    }
+  }
 
   onSubmit(): void {
     if (this.editUserForm.valid) {
-      const updatedUserData = this.editUserForm.value;
-      this.accountService.updateUserInformation(updatedUserData).subscribe(
+      const formData = new FormData();
+      Object.keys(this.editUserForm.value).forEach(key => {
+        if (key === 'address') {
+          Object.keys(this.editUserForm.get(key).value).forEach(subKey => {
+            if (this.editUserForm.get(key).get(subKey).value) {
+              formData.append(`address[${subKey}]`, this.editUserForm.get(key).get(subKey).value);
+            }
+          });
+        } else if (this.editUserForm.get(key).value) {
+          formData.append(key, this.editUserForm.get(key).value);
+        }
+      });
+      if (this.userProfilePhoto) {
+        formData.append('userProfilePhoto', this.userProfilePhoto);
+      }
+    
+      this.accountService.updateUserInformation(formData).subscribe(
         (response) => {
           console.log('User information updated successfully:', response);
           this.toastr.success('User information updated successfully');
@@ -74,9 +109,7 @@ export class EditUserComponent implements OnInit {
       );
     } else {
       console.log('The form is not valid.');
+      this.toastr.error('The form is not valid.');
     }
   }
-
-
-
 }

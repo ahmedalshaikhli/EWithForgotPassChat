@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserSettingsRoutingModule } from './user-settings-routing.module';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { UserSettingsComponent } from './user-settings.component';
-
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [EditUserComponent,UserSettingsComponent],
@@ -14,7 +14,8 @@ import { UserSettingsComponent } from './user-settings.component';
     
     UserSettingsRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImageCropperModule
  
   ]
 })

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http.Headers;
 namespace API.Controllers
 {
 
@@ -24,21 +25,30 @@ namespace API.Controllers
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
          private readonly IEmailSender _emailSender;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper, IEmailSender emailSender)
+
+         private readonly IConfiguration _config;
+         
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper, IEmailSender emailSender, IConfiguration config)
         {
             _mapper = mapper;
             _tokenService = tokenService;
             _signInManager = signInManager;
             _userManager = userManager;
             _emailSender = emailSender;
+            _config = config;
             
         }
+
 
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
             var user = await _userManager.FindUserByClaimsPrincipleWithAddress (HttpContext.User);
+              if (user == null)
+    {
+        return NotFound("User not found");
+    }
 
             return new UserDto
             {
@@ -66,6 +76,7 @@ namespace API.Controllers
         Email = user.Email,
         Token = await _tokenService.CreateToken(user),
         DisplayName = user.DisplayName,
+        UserProfilePhoto = user.UserProfilePhoto
     };
 
     if (user.Address != null)
@@ -147,7 +158,8 @@ namespace API.Controllers
             {
                 DisplayName = registerDto.DisplayName,
                 Email = registerDto.Email,
-                UserName = registerDto.Email
+                UserName = registerDto.Email,
+                UserProfilePhoto =  "Content/images/Users/user-default-photo.png" // Default user photo
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
@@ -242,6 +254,8 @@ public async Task<ActionResult<IEnumerable<AppUser>>> GetAllUsers(int pageIndex 
 }
 
 
+//Edit user in admin panel
+
  [HttpPut("edit/{id}")]
 public async Task<IActionResult> UpdateUser(string id, [FromBody] AppUser appUser)
 {
@@ -301,9 +315,39 @@ public async Task<IActionResult> DeleteUserAsync(string id)
 
 
 
+/* [HttpPost("upload"), DisableRequestSizeLimit]
+public IActionResult Upload([FromForm] IFormFile file)
+{
+    try
+    {
+       var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "Users");
+
+        if (file.Length > 0)
+        {
+            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fullPath = Path.Combine(pathToSave, fileName);
+            var dbPath = Path.Combine("Content", "images", "Users", fileName);
+
+            using (var stream = new FileStream(fullPath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            return Ok(new { dbPath });
+        }
+        else
+        {
+            return BadRequest();
+        }
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, $"Internal server error: {ex}");
+    }
+} */
 [Authorize]
 [HttpPut("update-user")]
-public async Task<ActionResult<UserDto>> UpdateUserInformation(UserUpdateDto userUpdate)
+public async Task<ActionResult<UserDto>> UpdateUserInformation([FromForm] UserUpdateDto userUpdate)
 {
     var user = await _userManager.FindUserByClaimsPrincipleWithAddress(HttpContext.User);
     if (user == null) return NotFound("User not found");
@@ -313,6 +357,40 @@ public async Task<ActionResult<UserDto>> UpdateUserInformation(UserUpdateDto use
     {
         var emailExists = await _userManager.FindByEmailAsync(userUpdate.Email) != null;
         if (emailExists) return BadRequest("Email already exists");
+    }
+
+    // Handle the uploaded file
+    if (userUpdate.UserProfilePhoto != null && userUpdate.UserProfilePhoto.Length > 0)
+    {
+         var allowedFormats = new[] { ".png",".jpg",".jpeg" };
+        var fileFormat = Path.GetExtension(userUpdate.UserProfilePhoto.FileName).ToLowerInvariant();
+        if (!allowedFormats.Contains(fileFormat))
+        {
+            return BadRequest("Invalid file format. Only PNG files are allowed.");
+        }
+        // Generate a unique filename
+        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(userUpdate.UserProfilePhoto.FileName)}";
+        
+        // Define the directory
+        var uploads = Path.Combine("Content/images/Users");
+
+        // Combine the directory with the filename
+        var filePath = Path.Combine(uploads, fileName);
+
+        // Ensure the file directory exists
+        if (!Directory.Exists(uploads))
+        {
+            Directory.CreateDirectory(uploads);
+        }
+
+        // Save the file
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await userUpdate.UserProfilePhoto.CopyToAsync(fileStream);
+        }
+
+        // Update the user with the path where the image was saved
+        user.UserProfilePhoto = Path.Combine("Content/images/Users", fileName);
     }
 
     // Update user information
@@ -327,10 +405,30 @@ public async Task<ActionResult<UserDto>> UpdateUserInformation(UserUpdateDto use
     return BadRequest("Problem updating the user");
 }
 
+//Allow user to dlete his account 
+[Authorize]
+[HttpDelete("delete-account")]
+public async Task<IActionResult> DeleteAccount([FromQuery] string email)
+{
+    var user = await _userManager.FindByEmailAsync(email);
+
+    if (user == null)
+    {
+        return NotFound("User not found");
+    }
+
+    var result = await _userManager.DeleteAsync(user);
+
+    if (result.Succeeded)
+    {
+        return NoContent(); // Return 204 No Content status code
+    }
+    else
+    {
+        return BadRequest(result.Errors);
+    }
 }
-
-
-
+}
 }
 
     
