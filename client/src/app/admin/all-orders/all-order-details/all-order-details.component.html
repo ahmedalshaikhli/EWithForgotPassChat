@@ -1,39 +1,44 @@
-
-<div *ngIf="order">
-    <h2>Order Details</h2>
-    <p>Order ID: {{ order.id }}</p>
-    <p>Buyer Email: {{ order.buyerEmail }}</p>
-    <p>Order Date: {{ order.orderDate | date }}</p>
-    <p>Shipping Address:</p>
-    <ul>
-      <li>First Name: {{ order.shipToAddress.firstName }}</li>
-      <li>Last Name: {{ order.shipToAddress.lastName }}</li>
-      <li>Street: {{ order.shipToAddress.street }}</li>
-      <li>City: {{ order.shipToAddress.city }}</li>
-      <li>State: {{ order.shipToAddress.state }}</li>
-      <li>Zip Code: {{ order.shipToAddress.zipCode }}</li>
-    </ul>
-    <p>Delivery Method: {{ order.deliveryMethod }}</p>
-    <p>Shipping Price: {{ order.shippingPrice | currency }}</p>
-    <h3>Order Items:</h3>
-    <table class="table-bordered">
-      <thead>
-        <tr>
-          <th>Product Name</th>
-          <th>Price</th>
-          <th>Quantity</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of order.orderItems">
-          <td>{{ item.productName }}</td>
-          <td>{{ item.price | currency }}</td>
-          <td>{{ item.quantity }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>Subtotal: {{ order.subtotal | currency }}</p>
-    <p>PaymentMethod: {{ order.paymentMethod }}</p>
-    <p>Total: {{ order.total | currency }}</p>
-    <p>Status: {{ order.status }}</p>
+<div *ngIf="order" class="container">
+  <h2>Order Details</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <p><strong>Order ID:</strong> {{ order.id }}</p>
+      <p><strong>Buyer Email:</strong> {{ order.buyerEmail }}</p>
+      <p><strong>Order Date:</strong> {{ order.orderDate | date }}</p>
+      <p><strong>Shipping Address:</strong></p>
+      <ul>
+        <li><strong>First Name:</strong> {{ order.shipToAddress.firstName }}</li>
+        <li><strong>Last Name:</strong> {{ order.shipToAddress.lastName }}</li>
+        <li><strong>Street:</strong> {{ order.shipToAddress.street }}</li>
+        <li><strong>City:</strong> {{ order.shipToAddress.city }}</li>
+        <li><strong>State:</strong> {{ order.shipToAddress.state }}</li>
+        <li><strong>Zip Code:</strong> {{ order.shipToAddress.zipCode }}</li>
+      </ul>
+      <p><strong>Delivery Method:</strong> {{ order.deliveryMethod }}</p>
+      <p><strong>Shipping Price:</strong> {{ order.shippingPrice | currency }}</p>
+    </div>
+    <div class="col-md-6">
+      <h3>Order Items:</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of order.orderItems">
+            <td>{{ item.productName }}</td>
+            <td>{{ item.price | currency }}</td>
+            <td>{{ item.quantity }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Subtotal:</strong> {{ order.subtotal | currency }}</p>
+      <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
+      <p><strong>Total:</strong> {{ order.total | currency }}</p>
+      <p><strong>Status:</strong> {{ order.status }}</p>
+    </div>
   </div>
+</div>

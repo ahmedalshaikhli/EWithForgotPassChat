@@ -23,7 +23,7 @@ namespace API.Controllers
             _photoService = photoService;
         }
 
-        [Cached(600)]
+       /*  [Cached(600)] */
         [HttpGet]
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts(
             [FromQuery]ProductSpecParams productParams)

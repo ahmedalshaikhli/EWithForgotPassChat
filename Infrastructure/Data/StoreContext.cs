@@ -35,6 +35,13 @@ namespace Infrastructue.Data
                     }
                 }
             }
+                 if (Database.ProviderName == "Microsoft.EntityFrameworkCore.SqlServer")
+            {
+               modelBuilder.Entity<Order>()
+               .Property(p => p.Subtotal)
+               .HasColumnType("decimal(18,2)");
+            }
+
         }
     }
 }

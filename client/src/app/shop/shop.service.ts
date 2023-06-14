@@ -6,12 +6,13 @@ import { Pagination } from '../shared/models/pagination';
 import { IProduct } from '../shared/models/product';
 import { ShopParams } from '../shared/models/shopParams';
 import { Type } from '../shared/models/type';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
   brandSelected = new EventEmitter<number>();
   products: IProduct[] = [];
   brands: Brand[] = [];
