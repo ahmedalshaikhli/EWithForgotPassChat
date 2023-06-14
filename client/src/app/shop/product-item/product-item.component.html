@@ -19,50 +19,40 @@
         </a>
       </div>
     </div>
-  </div> -->
-  <div *ngIf="product" class="block product no-border z-depth-2-top z-depth-2--hover">
-    <div class="block-image">
-        <div class="d-flex justify-content-center mt-3">
-            <a [routerLink]="'/shop/' + product.id">
-                <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-center img-fluid custom-image-height">
-            </a>
-        </div>
-        <span class="product-ribbon product-ribbon-right product-ribbon--style-1 bg-blue text-uppercase">New</span>
+  </div> --><div *ngIf="product" class="block product no-border z-depth-2-top z-depth-2--hover">
+  <div class="block-image">
+    <div class="d-flex justify-content-center mt-3">
+      <a [routerLink]="'/shop/' + product.id">
+        <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-center img-fluid custom-image-height">
+      </a>
     </div>
-    <div class="block-body text-center">
-        <h3 class="heading heading-5 strong-600 text-capitalize">
-            <a [routerLink]="'/shop/' + product.id">
-                {{product.name | slice:0:25}}
+    <span class="product-ribbon product-ribbon-right product-ribbon--style-1 bg-blue text-uppercase">New</span>
+  </div>
+  <div class="block-body text-center">
+    <h3 class="heading heading-5 strong-600 text-capitalize">
+      <a [routerLink]="'/shop/' + product.id">
+        {{product.name | slice:0:25}}
+      </a>
+    </h3>
+    <p class="product-description">
+      {{product.price | currency}}
+    </p>
+    <div class="product-buttons mt-2">
+      <div class="row align-items-center">
+        <div class="col-6 text-start">
+      <!--       <a href="#" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Favorite">
+              <i class="fa fa-heart" style="margin-right: 10px;"></i>
+            </a>  -->
+            <a href="javascript:void(0)" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Share" (click)="openShareDialog(product)">
+              <i class="fa fa-share"></i>
             </a>
-        </h3>
-        <p class="product-description">
-            {{product.price | currency}}
-        </p>
-        <div class="product-buttons mt-2">
-            <div class="row align-items-center">
-                <div class="col-6 text-start">
-                    <!-- <a [routerLink]="'/shop/' + product.id" class="btn-icon" data-toggle="tooltip" data-placement="top" title="View">
-                        <i class="fa fa-eye" style="margin-right: 10px;"></i>
-                    </a> -->
-            <!--         <share-buttons [url]="'https://example.com/shop/' + product.id" [text]="product.name"></share-buttons> -->
-                    <a href="#" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Favorite">
-                        <i class="fa fa-heart" style="margin-right: 10px;"></i>
-                    </a> 
-                    <a href="#" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Compare">
-                        <i class="fa fa-share"></i>
-                    </a>
-                </div>
-                <div class="col-6 text-end">
-                    <button type="button" (click)="addItemToBasket()" class="btn btn-block btn-primary btn-circle btn-icon-left">
-                        <i class="fa fa-shopping-cart"></i> Add
-                    </button>
-                </div>
-            </div>
+          </div>
+        <div class="col-6 text-end">
+          <button type="button" (click)="addItemToBasket()" class="btn btn-block btn-primary btn-circle btn-icon-left">
+            <i class="fa fa-shopping-cart"></i> Add
+          </button>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-
-
-
-
-
