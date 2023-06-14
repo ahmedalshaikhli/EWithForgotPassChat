@@ -23,7 +23,7 @@ namespace API.Controllers
             _photoService = photoService;
         }
 
-        //[Cached(600)]
+        [Cached(600)]
         [HttpGet]
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts(
             [FromQuery]ProductSpecParams productParams)
@@ -70,8 +70,8 @@ namespace API.Controllers
             return Ok(await _unitOfWork.Repository<ProductType>().ListAllAsync());
         }
 
+        
         [HttpPost]
-   [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductToReturnDto>> CreateProduct(ProductCreateDto productToCreate)
         {

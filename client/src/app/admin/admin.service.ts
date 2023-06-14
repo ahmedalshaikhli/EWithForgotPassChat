@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {ProductFormValues} from '../shared/models/product';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { User } from '../shared/models/user';
 
 
@@ -11,7 +11,7 @@ import { User } from '../shared/models/user';
 })
 export class AdminService {
   baseUrl = environment.apiUrl;
-
+  user: User[] = [];
   constructor(private http: HttpClient) { }
 
   createProduct(product: ProductFormValues) {
@@ -58,9 +58,12 @@ export class AdminService {
     const url = this.baseUrl + `account/all-users?pageIndex=${pageIndex}&pageSize=${pageSize}&searchTerm=${searchTerm}`;
     return this.http.get<any>(url);
   }
-  getUserById(id: string): Observable<any> {
-    const url = `${this.baseUrl + 'account/edit'}/${id}`;
-    return this.http.get<any>(url);
+  getUserById(id: string) {
+    const user =this.user.find(p => p.id === id);
+
+    if(user) return of(user);
+  
+    return this.http.get<User>(this.baseUrl + 'account/edit' + id);
   }
 
 
