@@ -185,7 +185,7 @@ public async Task<ActionResult> ForgotPassword(ForgotPasswordDto forgotPasswordD
     if (user == null) return NotFound(new ApiResponse(404, "User not found"));
 
     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-    var frontEndUrl = "https://localhost:4200/account"; // Replace this with your front-end URL
+    var frontEndUrl = "https://localhost:5001/account"; // Replace this with your front-end URL
     var resetLink = $"{frontEndUrl}/reset-password?email={HttpUtility.UrlEncode(user.Email)}&token={HttpUtility.UrlEncode(token)}";
 
     // Send the reset link via email
