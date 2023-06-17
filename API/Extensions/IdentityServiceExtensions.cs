@@ -20,7 +20,7 @@ namespace API.Extensions
         {
             services.AddDbContext<AppIdentityDbContext>(opt =>
             {
-                opt.UseNpgsql(config.GetConnectionString("IdentityConnection"));
+                opt.UseSqlServer(config.GetConnectionString("IdentityConnection"));
             });
 
             var builder = services.AddIdentityCore<AppUser>();
